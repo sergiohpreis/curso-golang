@@ -1,0 +1,31 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type produto struct {
+	/*
+		Ao usar o atributo com letra "Maiúscula" exportamos ele para ser usado
+		publicamente.
+		Ao usar o atributo com letra "Minúscula", tornamos ele privado
+	*/
+	ID    int      `json:"id"`
+	Nome  string   `json:"nome"`
+	Preco float64  `json:"preço"`
+	Tags  []string `json:"tags"`
+}
+
+func main() {
+	// struct to json
+	p1 := produto{1, "Notebook", 1899.90, []string{"Promoção", "Eletrônico"}}
+	p1Json, _ := json.Marshal(p1)
+	fmt.Println(string(p1Json))
+
+	// json to struct
+	var p2 produto
+	jsonString := `{"id": 2, "nome": "Caneta", "preço": 8.90, "tags":["Papelaria","Importando"]}`
+	json.Unmarshal([]byte(jsonString), &p2)
+	fmt.Println(p2.Tags[1])
+}
